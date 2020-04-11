@@ -13,8 +13,7 @@ export interface LineUser {
 
 export interface User {
   id: string
-  name: string
-  email: String
+  count: number
 }
 
 class BaseError extends Error {
