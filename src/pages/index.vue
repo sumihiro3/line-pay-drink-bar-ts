@@ -68,6 +68,7 @@ import {
   scanCode,
   shareTargetPicker
 } from '~/plugins/liff'
+import { getUsers } from '~/plugins/firebase'
 
 @Component({
   components: {
@@ -90,6 +91,12 @@ export default class Index extends Vue {
   async asyncData(): Promise<void> {
     await console.log('LIFF_ID', process.env.LIFF_ID)
     await console.log('BASE_URL', process.env.BASE_URL)
+    await console.log(
+      'FIREBASE_DATABASE_URL',
+      process.env.FIREBASE_DATABASE_URL
+    )
+    const users = await getUsers()
+    console.log('Users', users)
   }
 
   async mounted() {
