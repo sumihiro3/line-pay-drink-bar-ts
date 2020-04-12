@@ -16,6 +16,60 @@ export interface User {
   count: number
 }
 
+export interface BotUser {
+  id: string
+  dsiplayName: number
+  pictureUrl?: string
+  active: boolean
+}
+
+export interface Item {
+  id: string
+  name: string
+  unitPrice: number
+  slot: number
+  imageUrl: string
+  thumbnailUrl: string
+  active: boolean
+}
+
+export enum PayStatus {
+  UNKNOWN = '',
+  ORDERED = 'ORDERED',
+  WAIT_FOR_PAYMENT_DONE = 'WAIT_FOR_PAYMENT_DONE',
+  PAYMENT_COMPLETED = 'PAYMENT_COMPLETED',
+  PAYMENT_ERROR = 'PAYMENT_ERROR'
+}
+
+export enum PrizeStatus {
+  NONE = '',
+  WIN = 'WIN',
+  LOSE = 'LOSE'
+}
+
+export enum CurrencyType {
+  JPY = 'JPY',
+  USD = 'USD',
+  TWD = 'TWD',
+  THB = 'THB'
+}
+
+export interface Order {
+  id: string
+  user: User
+  item: Item
+  quantity: number
+  title: string
+  payStatus: PayStatus
+  amount: number
+  currency: CurrencyType
+  transactionId?: string
+  orderedAt: Date
+  paidAt?: Date
+  prizeStatus: PrizeStatus
+  prizedAt?: Date
+}
+
 class BaseError extends Error {
   constructor(message?: string) {
     super(message)

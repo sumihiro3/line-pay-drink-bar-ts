@@ -1,6 +1,5 @@
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
-import { User } from '~/types'
 
 if (!firebase.apps.length) {
   console.log('Firebase Configs')
@@ -19,18 +18,3 @@ if (!firebase.apps.length) {
 }
 
 export default firebase
-
-export function getUsers(): Promise<Array<User>> {
-  return new Promise(resolve => {
-    const users: Array<User> = []
-    const db = firebase.firestore()
-    db.collection('users')
-      .get()
-      .then(query => {
-        query.forEach(doc => {
-          users.push(doc.data() as User)
-        })
-        resolve(users)
-      })
-  })
-}

@@ -8,7 +8,7 @@
         nuxt
     v-footer(:fixed="fixed" app)
       span
-        | &copy; {{ new Date().getFullYear() }}
+        | &copy; {{ new Date().getFullYear() }} LINE API Experts
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       fixed: false,
-      title: 'LIFF v2 Sample'
+      title: 'LINE Pay Drink Bar'
     }
   }
 }

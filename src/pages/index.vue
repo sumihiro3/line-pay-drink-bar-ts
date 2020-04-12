@@ -4,52 +4,16 @@
     justify-center
     align-center
   )
-    //- SnackBar to show API result
-    v-snackbar(
-      v-model="showSnackBar"
-      :timeout="snackBarTimeout"
-      :color="snackBarColor"
-    )
-      | {{ snackBarText }}
     v-flex(
       xs12
-      sm8
-      md6
+      sm12
+      md12
+      lg12
+      xl12
     )
-      div.text-center
-        v-img.my-10(
-          src='LINE_APP.png'
-          contain
-          height="200"
-        )
-        client-only
-          //- show user profile when user logged in
-          line-profile(
-            v-if="profile != null"
-            :profile="profile"
-            :isInClient="isInClient"
-            @doLogout="doLogout"
-          )
-          //- show LINE login button when user not logged in
-          line-login(
-            v-else
-            @doLogin="doLogin"
-          )
-          //- show buttons for execute LIFF APIs
-          liff-apis(
-            v-if="profile != null"
-            :isInClient="isInClient"
-            :os="os"
-            @openWindow="openWindow"
-            @sendMessage="sendMessage"
-            @scanCode="scanCode"
-            @shareTargetPicker="shareTargetPicker"
-          )
-          //- show LIFF status
-          liff-status(
-            v-if="liffInitialized"
-            :key="componentKey"
-          )
+      item-list(
+        :items="items"
+      )
 </template>
 
 <script lang="ts">
@@ -58,53 +22,35 @@ import { Profile } from '@line/bot-sdk'
 import {
   initLiff,
   isLineLoggedIn,
-  isInClient,
-  getOS,
   getLineProfile,
-  liffLogin,
-  liffLogout,
-  openWindow,
-  sendMessage,
-  scanCode,
-  shareTargetPicker
+  liffLogin
 } from '~/plugins/liff'
-import { getUsers } from '~/plugins/firebase'
+import { getItems } from '~/utils/item'
 
 @Component({
   components: {
-    LiffStatus: () => import('@/components/LiffStatus.vue'),
-    LineProfile: () => import('@/components/LineProfile.vue'),
-    LineLogin: () => import('@/components/LineLogin.vue'),
-    LiffApis: () => import('@/components/LiffApis.vue')
+    ItemList: () => import('@/components/ItemList.vue')
   }
 })
 export default class Index extends Vue {
   profile: Profile | null = null
   liffInitialized: boolean = false
-  isInClient: boolean = false
-  os: string = ''
   componentKey: number = 0
-  snackBarText: string = ''
-  snackBarColor: string = 'primary'
-  snackBarTimeout: number = 3000
-  showSnackBar: boolean = false
-  async asyncData(): Promise<void> {
+  async asyncData(): Promise<object> {
     await console.log('LIFF_ID', process.env.LIFF_ID)
     await console.log('BASE_URL', process.env.BASE_URL)
-    await console.log(
-      'FIREBASE_DATABASE_URL',
-      process.env.FIREBASE_DATABASE_URL
-    )
-    const users = await getUsers()
-    console.log('Users', users)
+    // get items
+    const items = await getItems()
+    console.log('items', items)
+    return {
+      items
+    }
   }
 
   async mounted() {
     if (this.liffInitialized === false) {
       await this.initializeLiff()
     }
-    this.isInClient = isInClient()
-    this.os = getOS()
     if (this.liffInitialized === true && this.loggedIn() === true) {
       this.profile = await getLineProfile()
     }
@@ -115,63 +61,14 @@ export default class Index extends Vue {
     this.liffInitialized = await initLiff(pageLiffId)
   }
 
-  async doLogin() {
-    // const redirectUrl = `${process.env.BASE_URL}?hogehoge=fugafuga`
-    // console.info('LINE Login redirectUrl:', redirectUrl)
-    await liffLogin()
-    this.profile = await getLineProfile()
-    this.componentKey += 1
-    this.openSnackBar('Login success!!')
-  }
-
-  async doLogout() {
-    await liffLogout()
-    this.profile = null
-    this.componentKey += 1
-    this.openSnackBar('Logout success!!')
-  }
-
   loggedIn(): boolean {
     return isLineLoggedIn()
   }
 
-  async getProfile(): Promise<Profile> {
-    return await getLineProfile()
-  }
-
-  openWindow() {
-    openWindow('https://line.me')
-  }
-
-  sendMessage() {
-    sendMessage()
-    this.openSnackBar('Message sent!')
-  }
-
-  async scanCode() {
-    const result = await scanCode()
-    console.log('Scanned!', result)
-    if (result != null) {
-      this.openSnackBar(`Scanned text is "${result}"`)
-    }
-  }
-
-  async shareTargetPicker() {
-    const result: boolean = await shareTargetPicker()
-    if (result === true) {
-      this.openSnackBar('ShareTargetPicker launched!')
-    } else {
-      this.openSnackBar('ShareTargetPicker launch failed...', true)
-    }
-  }
-
-  openSnackBar(text: string, warning: boolean = false) {
-    this.snackBarText = text
-    this.snackBarColor = 'primary'
-    if (warning === true) {
-      this.snackBarColor = 'warning'
-    }
-    this.showSnackBar = true
+  async doLogin() {
+    await liffLogin()
+    this.profile = await getLineProfile()
+    this.componentKey += 1
   }
 }
 </script>
