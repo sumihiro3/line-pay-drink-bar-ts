@@ -57,5 +57,17 @@ browse app
 gcloud app browse
 ```
 
+## add express as backend for frontend api server
+
+```bash
+npm install --save express express-session body-parser
+```
 
 
+add serverMiddleware setting in nuxt.config.js
+
+```js
+serverMiddleware: ['~/server/'],
+```
+
+add [server/index.ts](src/server/index.ts) and implement LINE Bot webhooks in [server/apis/bot.ts](src/server/apis/bot.ts)

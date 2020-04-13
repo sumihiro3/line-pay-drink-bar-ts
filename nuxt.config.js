@@ -4,6 +4,7 @@ require('dotenv').config()
 export default {
   mode: 'universal',
   srcDir: 'src',
+  serverMiddleware: ['~/server/'],
   /*
    ** Headers of the page
    */
@@ -67,6 +68,9 @@ export default {
   },
   env: {
     BASE_URL: process.env.BASE_URL || 'http://127.0.0.1:3000',
+    SESSION_SECRET: process.env.SESSION_SECRET || '',
+    SESSION_COOKIE_SECURE: process.env.SESSION_COOKIE_SECURE || '',
+    SESSION_COOKIE_MAX_AGE_DAYS: process.env.SESSION_COOKIE_MAX_AGE_DAYS || '1',
     LIFF_ID: process.env.LIFF_ID || 'DUMMY_LIFF_ID',
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY || '',
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN || '',
