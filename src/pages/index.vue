@@ -13,6 +13,7 @@
     )
       item-list(
         :items="items"
+        @purchaseItem="purchaseItem"
       )
 </template>
 
@@ -25,7 +26,9 @@ import {
   getLineProfile,
   liffLogin
 } from '~/plugins/liff'
+import { BotUser, Item, Order } from '~/types'
 import { getItems } from '~/utils/item'
+import { setOrder, getOrder } from '~/utils/order'
 
 @Component({
   components: {
@@ -69,6 +72,26 @@ export default class Index extends Vue {
     await liffLogin()
     this.profile = await getLineProfile()
     this.componentKey += 1
+  }
+
+  async purchaseItem(item: Item) {
+    console.log(`purchase item: ${item}`)
+    // TODO remove dummy data
+    const u: BotUser = {
+      id: 'dummyUser',
+      displayName: 'dummyName',
+      active: true
+    }
+    const order: Order = new Order('dummyOrderId', u, item, item.name)
+    await setOrder(order)
+
+    // dummy
+    try {
+      const storedOrder = await getOrder(order.id)
+      console.log(`stored order ${storedOrder.title}`)
+    } catch (error) {
+      console.warn(`Got error... ${error}`)
+    }
   }
 }
 </script>

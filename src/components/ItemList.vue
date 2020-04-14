@@ -20,11 +20,13 @@
                 | {{ item.name }}
               v-card-subtitle.pb-0.pl-1
                 | {{ item.description }}
-              //- v-card-text.text-left.subtitle-1.pb-2.pl-8
-              //-   | {{ item.unitPrice }} 円
               v-card-actions
                 div.pl-2.mb-6.mt-4
-                  v-btn(color="info" large)
+                  v-btn(
+                    color="info"
+                    large
+                    @click="purchaseItem(item)"
+                  )
                     | 購入する（{{ item.unitPrice }} 円）
 </template>
 
@@ -35,5 +37,16 @@ import { Item } from '~/types'
 @Component
 export default class ItemList extends Vue {
   @Prop({ type: Array, required: true }) readonly items!: Array<Item>
+
+  purchaseItem(item: Item) {
+    this.$emit('purchaseItem', item)
+  }
 }
 </script>
+
+<style>
+.v-card {
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px 0px rgba(0, 0, 0, 0),
+    0px 0px 0px 0px rgba(0, 0, 0, 0);
+}
+</style>

@@ -18,7 +18,7 @@ export interface User {
 
 export interface BotUser {
   id: string
-  dsiplayName: number
+  displayName: string
   pictureUrl?: string
   active: boolean
 }
@@ -54,10 +54,10 @@ export enum CurrencyType {
   THB = 'THB'
 }
 
-export interface Order {
+export interface IOrder {
   id: string
-  user: User
-  item: Item
+  userId: string
+  itemId: string
   quantity: number
   title: string
   payStatus: PayStatus
@@ -68,6 +68,35 @@ export interface Order {
   paidAt?: Date
   prizeStatus: PrizeStatus
   prizedAt?: Date
+}
+
+export class Order implements IOrder {
+  id: string
+  userId: string
+  itemId: string
+  quantity: number
+  title: string
+  payStatus: PayStatus
+  amount: number
+  currency: CurrencyType
+  transactionId?: string
+  orderedAt: Date
+  paidAt?: Date
+  prizeStatus: PrizeStatus
+  prizedAt?: Date
+
+  constructor(id_: string, user_: BotUser, item_: Item, title_: string) {
+    this.id = id_
+    this.userId = user_.id
+    this.itemId = item_.id
+    this.quantity = 1
+    this.title = title_
+    this.payStatus = PayStatus.ORDERED
+    this.amount = item_.unitPrice * this.quantity
+    this.currency = CurrencyType.JPY
+    this.orderedAt = new Date()
+    this.prizeStatus = PrizeStatus.NONE
+  }
 }
 
 class BaseError extends Error {
@@ -84,3 +113,5 @@ export class LiffError extends BaseError {
     super(message)
   }
 }
+
+export class DataNotFoundError extends BaseError {}
