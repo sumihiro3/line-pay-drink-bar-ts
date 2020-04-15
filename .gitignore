@@ -58,6 +58,8 @@ typings/
 
 # dotenv environment variables file
 .env
+config/.env.dev
+config/.env.prod
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -91,3 +93,6 @@ sw.*
 
 # firebase service account file
 ServiceAccount.json
+
+# GAE environment values
+gae-envs.yaml

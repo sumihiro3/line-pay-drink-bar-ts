@@ -13,5 +13,9 @@
 .git
 .gitignore
 
+.env
+config/.env.dev
+config/.env.prod
+
 # Node.js dependencies:
 node_modules/
