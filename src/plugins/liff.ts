@@ -54,9 +54,9 @@ export function isLineLoggedIn(): boolean {
   return window.liff.isLoggedIn()
 }
 
-// export function isLiffApiAvailable(apiName: string): boolean {
-//   return window.liff.isApiAvailable(apiName)
-// }
+export function isLiffApiAvailable(apiName: string): boolean {
+  return window.liff.isApiAvailable(apiName)
+}
 
 export function getLiffAccessToken(): string {
   return window.liff.getAccessToken()
