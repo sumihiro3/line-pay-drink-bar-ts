@@ -1,5 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
-require('dotenv').config()
+// load dotenv
+const dotEnvPath =
+  process.env.NODE_ENV !== 'production'
+    ? './config/.env.dev'
+    : './config/.env.prod'
+require('dotenv').config({ path: dotEnvPath })
 
 export default {
   mode: 'universal',
@@ -42,8 +47,7 @@ export default {
    */
   plugins: [
     { src: '~/plugins/axios.js' },
-    { src: '~/plugins/liff', ssr: false },
-    { src: '~/plugins/firebase' }
+    { src: '~/plugins/liff', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -55,9 +59,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/pwa'
   ],
   /*
    ** dotEnv module configuration
@@ -68,27 +70,19 @@ export default {
   },
   env: {
     BASE_URL: process.env.BASE_URL || 'http://127.0.0.1:3000',
+    API_BASE_URL: process.env.API_BASE_URL || 'http://127.0.0.1:3000',
     SESSION_SECRET: process.env.SESSION_SECRET || '',
     SESSION_COOKIE_SECURE: process.env.SESSION_COOKIE_SECURE || '',
     SESSION_COOKIE_MAX_AGE_DAYS: process.env.SESSION_COOKIE_MAX_AGE_DAYS || '1',
-    LIFF_ID: process.env.LIFF_ID || 'DUMMY_LIFF_ID',
-    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY || '',
-    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN || '',
-    FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL || '',
-    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID || '',
-    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET || '',
-    FIREBASE_MESSAGING_SENDER_ID:
-      process.env.FIREBASE_MESSAGING_SENDER_ID || '',
-    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID || '',
-    FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID || ''
+    LIFF_ID: process.env.LIFF_ID || 'DUMMY_LIFF_ID'
   },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.API_BASE_URL || 'http://api.example.com',
-    browserBaseURL: process.env.API_BASE_URL || 'http://api.example.com'
+    // baseURL: process.env.API_BASE_URL || 'http://api.example.com',
+    // browserBaseURL: process.env.API_BASE_URL || 'http://api.example.com'
   },
   /*
    ** vuetify module configuration
