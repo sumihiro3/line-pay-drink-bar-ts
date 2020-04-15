@@ -9,7 +9,6 @@ require('dotenv').config({ path: dotEnvPath })
 export default {
   mode: 'universal',
   srcDir: 'src',
-  serverMiddleware: ['~/server/'],
   /*
    ** Headers of the page
    */
@@ -47,7 +46,8 @@ export default {
    */
   plugins: [
     { src: '~/plugins/axios.js' },
-    { src: '~/plugins/liff', ssr: false }
+    { src: '~/plugins/liff', ssr: false },
+    { src: '~/plugins/firebase' }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -74,16 +74,24 @@ export default {
     SESSION_SECRET: process.env.SESSION_SECRET || '',
     SESSION_COOKIE_SECURE: process.env.SESSION_COOKIE_SECURE || '',
     SESSION_COOKIE_MAX_AGE_DAYS: process.env.SESSION_COOKIE_MAX_AGE_DAYS || '1',
-    LIFF_ID: process.env.LIFF_ID || 'DUMMY_LIFF_ID'
+    LIFF_ID: process.env.LIFF_ID || 'DUMMY_LIFF_ID',
+    BOT_CHANNEL_ACCESS_TOKEN: process.env.BOT_CHANNEL_ACCESS_TOKEN || '',
+    BOT_CHANNEL_SECRET: process.env.BOT_CHANNEL_SECRET || '',
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY || '',
+    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN || '',
+    FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL || '',
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID || '',
+    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET || '',
+    FIREBASE_MESSAGING_SENDER_ID:
+      process.env.FIREBASE_MESSAGING_SENDER_ID || '',
+    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID || '',
+    FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID || ''
   },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {
-    // baseURL: process.env.API_BASE_URL || 'http://api.example.com',
-    // browserBaseURL: process.env.API_BASE_URL || 'http://api.example.com'
-  },
+  axios: {},
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
