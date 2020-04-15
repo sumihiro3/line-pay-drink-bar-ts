@@ -26,9 +26,9 @@ import {
   getLineProfile,
   liffLogin
 } from '~/plugins/liff'
-import { BotUser, Item, Order } from '~/types'
+import { Item, BotUser, Order } from '~/types'
 import { getItems } from '~/utils/item'
-import { setOrder, getOrder } from '~/utils/order'
+import { setOrder } from '~/utils/order'
 
 @Component({
   components: {
@@ -42,6 +42,7 @@ export default class Index extends Vue {
   async asyncData(): Promise<object> {
     await console.log('LIFF_ID', process.env.LIFF_ID)
     await console.log('BASE_URL', process.env.BASE_URL)
+    await console.log('API_BASE_URL', process.env.API_BASE_URL)
     // get items
     const items = await getItems()
     console.log('items', items)
@@ -82,16 +83,9 @@ export default class Index extends Vue {
       displayName: 'dummyName',
       active: true
     }
-    const order: Order = new Order('dummyOrderId', u, item, item.name)
+    const orderId = 'dummyOrderId999'
+    const order: Order = new Order(orderId, u, item, item.name)
     await setOrder(order)
-
-    // dummy
-    try {
-      const storedOrder = await getOrder(order.id)
-      console.log(`stored order ${storedOrder.title}`)
-    } catch (error) {
-      console.warn(`Got error... ${error}`)
-    }
   }
 }
 </script>

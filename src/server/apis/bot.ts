@@ -7,13 +7,13 @@ const users = [{ name: 'Alexandre' }, { name: 'Pooya' }, { name: 'Sébastien' }]
 
 /* GET users listing. */
 router.get('/users', (req: Request, res: Response) => {
-  console.log(req.url)
+  console.debug(req.url, 'called!')
   res.json(users)
 })
 
 /* GET user by ID. */
 router.get('/users/:id', (req: Request, res: Response) => {
-  console.log(req.url)
+  console.debug(req.url, 'called!')
   const id = parseInt(req.params.id)
   if (id >= 0 && id < users.length) {
     res.json(users[id])
