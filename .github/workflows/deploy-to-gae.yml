@@ -48,4 +48,4 @@ jobs:
           FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
 
       - name: Deploy to GAE
-        run: gcloud app deploy app.yaml --project ${{ secrets.FIREBASE_PROJECT_ID }}
+        run: gcloud app deploy app-for-github-action.yaml --project ${{ secrets.FIREBASE_PROJECT_ID }}
