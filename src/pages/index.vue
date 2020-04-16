@@ -45,7 +45,6 @@ export default class Index extends Vue {
   async asyncData(): Promise<object> {
     await console.log('LIFF_ID', process.env.LIFF_ID)
     await console.log('BASE_URL', process.env.BASE_URL)
-    await console.log('API_BASE_URL', process.env.API_BASE_URL)
     // get items
     const items = await getItems()
     console.log('items', items)
