@@ -71,3 +71,50 @@ serverMiddleware: ['~/server/'],
 ```
 
 add [server/index.ts](src/server/index.ts) and implement LINE Bot webhooks in [server/apis/bot.ts](src/server/apis/bot.ts)
+
+## Deploy to Netlify with GitHubActions
+
+install netlify-cli for deploy
+
+```bash
+npm install -D netlify-cli
+```
+
+add action file in .github/workflows/netlify.yml
+
+### Get APP ID
+
+Access to below linkand get APP ID.
+
+https://app.netlify.com/sites/line-pay-drink-bar/settings/general#site-information
+
+
+### Generate Personal access tokens
+
+Access to below link and generate Personal access token.
+
+https://app.netlify.com/user/applications#personal-access-tokens
+
+
+### Netlifyの認証キーをGithubに登録
+
+GitHub Repository -> Settings -> Secrets
+
+- NETLIFY_SITE_ID
+  - Netlify APP ID
+- NETLIFY_AUTH_TOKEN
+  - Netlify Personal access tokens
+
+### Add Environment values to GitHub
+
+GitHub Repository -> Settings -> Secrets
+
+- LIFF_ID
+- FIREBASE_API_KEY
+- FIREBASE_AUTH_DOMAIN
+- FIREBASE_DATABASE_URL
+- FIREBASE_PROJECT_ID
+- FIREBASE_STORAGE_BUCKET
+- FIREBASE_MESSAGING_SENDER_ID
+- FIREBASE_APP_ID
+- FIREBASE_MEASUREMENT_ID
